@@ -569,7 +569,7 @@ p {
 }
 
 /* Estilos para fotos en las secciones */
-.section img {
+.section img:not(.whatsapp-icon) {
   width: 200px;
   height: auto;
   border-radius: var(--radius);
@@ -597,3 +597,406 @@ body {
   color: var(--muted);
   max-width: 600px;
 }
+
+
+
+/* Icono de WhatsApp en la barra de navegación (top-right) */
+.nav-bar {
+  position: relative;
+}
+.whatsapp-nav {
+  margin-left: auto;             /* empuja hacia la derecha */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: #ffffffcc;         /* fondo sutil */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.whatsapp-nav:hover {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.whatsapp-nav .whatsapp-icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* Si existiera el antiguo botón flotante, lo mantenemos desactivado por ahora */
+.whatsapp-float { display: none !important; }
+.whatsapp-float:hover {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 8px 24px rgba(37,211,102,0.22), 0 0 0 6px rgba(37,211,102,0.12);
+}
+.whatsapp-icon {
+  width: 22px;              /* ícono más pequeño */
+  height: 22px;
+}
+/* Estado oculto controlado por JS mientras el usuario se desplaza */
+.whatsapp-float.is-hidden {
+  opacity: 0;
+  transform: translateY(16px) scale(0.96);
+  pointer-events: none;
+}
+
+/* Respeta usuarios con reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float { transition: opacity .2s ease, transform .2s ease, box-shadow .2s ease; }
+}
+
+
+
+/* Enlaces de Instagram dentro de la tarjeta Emprender */
+.social-links {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.social-link.ig {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: #ffffffcc;
+  color: #d62976; /* tono Instagram */
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.social-link.ig:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  background: #fff;
+}
+.ig-icon {
+  width: 18px;
+  height: 18px;
+  color: #d62976;
+}
+.logros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.logro-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 24px;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: transform .25s, box-shadow .25s;
+}
+
+.logro-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.logro-card img {
+  width: 80px; 
+  height: 80px; 
+  object-fit: cover; 
+  border-radius: 50%; 
+  margin-bottom: 12px;
+  border: 2px solid var(--brand);
+}
+
+.logro-card .logro-title {
+    font-size: 1.1rem; 
+    color: var(--brand-dark); 
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.logro-card .logro-summary {
+    color: var(--muted); 
+    font-size: 0.95rem;
+}
+
+/* Sección "Mi inspiración" */
+.inspiracion-content {
+  display: flex; align-items: center; gap: 32px; margin-top: 24px;
+}
+.inspiracion-img img {
+  width: 160px; height: 160px; object-fit: cover; border-radius: 50%; border: 3px solid var(--brand);
+}
+.inspiracion-text { max-width: 400px; }
+.quote { font-size: 1.15rem; color: var(--brand-dark); font-style: italic; margin-bottom: 12px; }
+
+/* Sección "Quién quiero ser" */
+#quien-quiero-ser-text { font-size: 1.18rem; color: var(--brand-dark); }
+
+.site-footer {
+  border-top: 1px solid #e5e7eb;
+  background: var(--surface);
+  padding: 26px 0;
+  color: var(--muted);
+  text-align: center;
+  font-size: 1rem;
+}
+
+:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+
+/* Animación de flores (toda la pantalla) */
+.flower {
+  position: fixed;
+  width: 64px; height: 64px;
+  pointer-events: none;
+  z-index: 1100;
+  animation: flower-pop 1.4s cubic-bezier(.5,1.5,.5,1) forwards;
+}
+@keyframes flower-pop {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  60% { transform: scale(1.2) rotate(20deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 0; }
+}
+
+@media (max-width: 900px) {
+  .container { width: 98%; }
+  .logros-grid { grid-template-columns: 1fr 1fr; }
+  .inspiracion-content { flex-direction: column; gap: 18px; }
+}
+/* Responsive adjustments for mobile devices */
+@media (max-width: 700px) {
+  .container {
+    width: 98%;
+  }
+  .hobbies-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .main-photo {
+    width: 140px;
+    height: 140px;
+  }
+  .logros-grid {
+    grid-template-columns: 1fr;
+  }
+  .inspiracion-content {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .hero-main h1 {
+    font-size: 2rem;
+  }
+  .hero-main p {
+    font-size: 1rem;
+  }
+  .hobby-card {
+    width: 180px;
+    height: 180px;
+  }
+  .logro-card {
+    padding: 16px;
+  }
+  .logro-card img {
+    width: 60px;
+    height: 60px;
+  }
+}
+/* Hobbies */
+/* Estilos para la sección "Mis hobbies" */
+.hobbies-grid {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hobby-card {
+  width: 220px;
+  height: 220px;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: zoomEffect 3s infinite alternate;
+}
+
+.hobby-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.hobby-card h3 {
+  font-size: 1.5rem;
+  color: var(--brand-dark);
+  margin-bottom: 8px;
+}
+
+.hobby-card p {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+/* Efectos de iluminación para las secciones */
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  z-index: -1;
+}
+
+.hobby-item {
+  width: 200px;
+  height: 200px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.hobby-item h3 {
+  font-size: 1.5rem;
+  color: var(--brand-dark);
+  margin-bottom: 8px;
+}
+
+.hobby-item p {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.hobby-item:hover {
+  transform: scale(1.1);
+}
+
+/* Fondo dinámico */
+body {
+  background: linear-gradient(120deg, #e0f7fa, #fce4ec);
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Colores para las secciones */
+.section {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.section.alt {
+  background: linear-gradient(135deg, #ffccbc, #ffe0b2);
+}
+
+/* Animaciones de entrada y salida */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Personalización del puntero como estrella */
+body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="10" fill="black"/><path d="M24 0 L28 16 L48 24 L28 32 L24 48 L20 32 L0 24 L20 16 Z" fill="white"/></svg>'), auto;
+}
+
+/* Efecto de destello al mover el puntero */
+body:hover::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, white 0%, transparent 70%);
+  border-radius: 50%;
+  animation: sparkle 0.5s ease-out;
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+/* Ajustes para desestructurar las secciones */
+.section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+.section.alt {
+  flex-direction: row-reverse;
+}
+
+/* Tipografía aumentada */
+h2 {
+  font-size: 2.5rem;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+/* Estilos para fotos en las secciones */
+.section img:not(.whatsapp-icon) {
+  width: 200px;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+/* Remove custom cursor */
+body {
+  cursor: auto;
+}
+
+/* Add styles for hero section content */
+.hero-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.hero-main h1 {
+  font-size: 2.8rem;
+  color: var(--brand-dark);
+  margin-bottom: 16px;
+}
+.hero-main p {
+  font-size: 1.2rem;
+  color: var(--muted);
+  max-width: 600px;
+}
+
+
