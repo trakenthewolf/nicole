@@ -1,0 +1,599 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
+:root {
+  --bg: #f5f7fa;
+  --surface: #fff;
+  --surface-blur: rgba(255,255,255,0.7);
+  --brand: #4ade80;
+  --brand-dark: #166534;
+  --gray: #64748b;
+  --text: #222;
+  --muted: #555;
+  --radius: 18px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  background-image: url('https://source.unsplash.com/1600x900/?forest'); /* Fondo de bosque */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text);
+}
+body.modal-open .hobbies-grid,
+body.modal-open .logros-grid {
+  filter: blur(12px) brightness(0.7) grayscale(0.2);
+  pointer-events: none;
+  transition: filter .3s;
+}
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Overlay para modales: asegurar que cubren toda la pantalla y centran el contenido verticalmente */
+.hobbie-detail, .logro-detail {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(120deg, #166534 0%, #34d3ab 100%); /* overlay verde oscuro degradado opaco */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.98) translateY(10px);
+  transition: opacity .35s ease, transform .35s ease;
+  overflow: hidden; /* Cambiado a hidden para evitar scroll innecesario */
+}
+.hobbie-detail.visible, .logro-detail.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+  z-index: 2000;
+}
+.hobbie-detail-content, .logro-detail-content {
+  background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(220,252,231,0.93));
+  border-radius: var(--radius);
+  box-shadow: 0 12px 48px rgba(22,101,52,0.18), var(--shadow);
+  padding: 40px 32px;
+  width: min(98vw, 680px);
+  max-width: 98vw;
+  text-align: center;
+  position: relative;
+  border: 2px solid #4ade80;
+  background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(220,252,231,0.93)) padding-box,
+              linear-gradient(135deg, #bbf7d0, #93c5fd) border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 320px;
+}
+.close-modal {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+  color: var(--brand-dark);
+  box-shadow: 0 2px 8px rgba(22,101,52,0.12);
+  cursor: pointer;
+  transition: background .2s;
+  z-index: 10;
+}
+.close-modal:hover {
+  background: #bbf7d0;
+}
+.hobbie-detail-img { width: 120px; height: 120px; object-fit: cover; border-radius: 14px; border: 3px solid var(--brand); margin-bottom: 12px; }
+.hobbie-detail-title, .logro-detail-title { font-size: 1.7rem; color: var(--brand-dark); margin-bottom: 10px; font-weight: 700; }
+.hobbie-detail-text, .logro-detail-text { color: var(--muted); font-size: 1.13rem; line-height: 1.7; }
+
+@media (max-width: 700px) {
+  .hobbie-detail-content, .logro-detail-content { padding: 10px; min-height: 180px; width: 98vw; }
+  .hobbie-detail-img { width: 100px; height: 100px; }
+  .close-modal { top: 8px; right: 8px; width: 28px; height: 28px; font-size: 1.2rem; }
+}
+
+/* Fondo animado decorativo (eliminado) */
+.welcome-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+.welcome-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(120deg, #e0f2fe 60%, #bbf7d0 100%);
+  z-index: -1;
+}
+.btn-heart {
+  font-size: 1.7rem;
+  background: var(--surface-blur);
+  border: 2px solid var(--brand);
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(76,175,80,0.18);
+  padding: 28px 56px;
+  color: var(--brand-dark);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 18px;
+  transition: background .2s, transform .2s, box-shadow .2s, color .2s;
+  position: relative;
+  z-index: 2;
+  letter-spacing: 1px;
+}
+.btn-heart:hover {
+  background: var(--brand);
+  color: #fff;
+  transform: scale(1.08);
+  box-shadow: 0 16px 48px rgba(76,175,80,0.22);
+}
+.heart { font-size: 2.3rem; }
+
+/* Reveal animaciones para scroll */
+.reveal-item { opacity: 0; transform: translateY(30px); transition: opacity .6s cubic-bezier(.25,.75,.5,1), transform .6s cubic-bezier(.25,.75,.5,1); }
+.reveal-item.visible { opacity: 1; transform: none; }
+
+/* Página principal */
+.main-page { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: relative; z-index: 1; }
+.site-header {
+  background: var(--surface-blur);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  position: sticky; top: 0; z-index: 50;
+}
+.nav-bar { height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.brand { font-weight: 700; font-size: 1.2rem; color: var(--brand-dark); }
+
+.container { width: min(900px, 92%); margin-inline: auto; position: relative; }
+.section { padding: 64px 0; position: relative; }
+.section.alt { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); }
+.hero-main { display: flex; justify-content: center; align-items: center; }
+.main-photo {
+  width: 220px; height: 220px; object-fit: cover; border-radius: 50%; box-shadow: 0 8px 32px rgba(76,175,80,0.18);
+  border: 4px solid var(--brand);
+}
+
+h2 { font-size: 2rem; font-weight: 700; color: var(--brand-dark); margin-bottom: 18px; }
+.lead { font-size: 1.15rem; color: var(--muted); margin-bottom: 18px; }
+
+/* Hobbies */
+.hobbies-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px;
+}
+.hobbie-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px;
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer;
+  transition: transform .18s, box-shadow .18s;
+  position: relative;
+  overflow: hidden;
+}
+.hobbie-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 32px rgba(76,175,80,0.12);
+}
+.card-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 60% 40%, #bbf7d0 0%, transparent 70%);
+  opacity: 0.18;
+  z-index: 0;
+}
+.hobbie-card img {
+  width: 120px; height: 120px; object-fit: cover; border-radius: 50%; margin-bottom: 12px;
+  border: 2px solid var(--brand);
+  z-index: 1;
+}
+.hobbie-title { font-weight: 600; color: var(--gray); margin-bottom: 6px; z-index: 1; }
+
+/* Detalle de hobbie con animación */
+.hobbie-detail {
+  position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(245,247,250,0.92);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 1200;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95) translateY(40px);
+  transition: opacity .6s cubic-bezier(.5,1.5,.5,1), transform .6s cubic-bezier(.5,1.5,.5,1);
+}
+/* Corrección: Asegurar que el fondo borroso no quede activo tras la bienvenida y que los detalles de hobbies/logros sean visibles correctamente. */
+.welcome-screen[style*="display:none"] + .main-page .animated-bg {
+  filter: none !important;
+}
+.hobbie-detail.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+  z-index: 2000;
+}
+
+/* Estilos para el detalle de logros */
+.logro-detail {
+  position: fixed;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition: opacity .4s, transform .4s;
+}
+
+.logro-detail.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.logro-detail-content {
+  background: var(--surface);
+  padding: 32px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: min(600px, 90%);
+  text-align: center;
+  position: relative;
+}
+
+.logro-detail-title {
+  font-size: 1.8rem;
+  color: var(--brand-dark);
+  margin-bottom: 12px;
+}
+
+.logro-detail-text {
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+#close-logro {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--gray);
+}
+.logros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.logro-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 24px;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: transform .25s, box-shadow .25s;
+}
+
+.logro-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.logro-card img {
+  width: 80px; 
+  height: 80px; 
+  object-fit: cover; 
+  border-radius: 50%; 
+  margin-bottom: 12px;
+  border: 2px solid var(--brand);
+}
+
+.logro-card .logro-title {
+    font-size: 1.1rem; 
+    color: var(--brand-dark); 
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.logro-card .logro-summary {
+    color: var(--muted); 
+    font-size: 0.95rem;
+}
+
+/* Sección "Mi inspiración" */
+.inspiracion-content {
+  display: flex; align-items: center; gap: 32px; margin-top: 24px;
+}
+.inspiracion-img img {
+  width: 160px; height: 160px; object-fit: cover; border-radius: 50%; border: 3px solid var(--brand);
+}
+.inspiracion-text { max-width: 400px; }
+.quote { font-size: 1.15rem; color: var(--brand-dark); font-style: italic; margin-bottom: 12px; }
+
+/* Sección "Quién quiero ser" */
+#quien-quiero-ser-text { font-size: 1.18rem; color: var(--brand-dark); }
+
+.site-footer {
+  border-top: 1px solid #e5e7eb;
+  background: var(--surface);
+  padding: 26px 0;
+  color: var(--muted);
+  text-align: center;
+  font-size: 1rem;
+}
+
+:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+
+/* Animación de flores (toda la pantalla) */
+.flower {
+  position: fixed;
+  width: 64px; height: 64px;
+  pointer-events: none;
+  z-index: 1100;
+  animation: flower-pop 1.4s cubic-bezier(.5,1.5,.5,1) forwards;
+}
+@keyframes flower-pop {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  60% { transform: scale(1.2) rotate(20deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 0; }
+}
+
+@media (max-width: 900px) {
+  .container { width: 98%; }
+  .logros-grid { grid-template-columns: 1fr 1fr; }
+  .inspiracion-content { flex-direction: column; gap: 18px; }
+}
+/* Responsive adjustments for mobile devices */
+@media (max-width: 700px) {
+  .container {
+    width: 98%;
+  }
+  .hobbies-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .main-photo {
+    width: 140px;
+    height: 140px;
+  }
+  .logros-grid {
+    grid-template-columns: 1fr;
+  }
+  .inspiracion-content {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .hero-main h1 {
+    font-size: 2rem;
+  }
+  .hero-main p {
+    font-size: 1rem;
+  }
+  .hobby-card {
+    width: 180px;
+    height: 180px;
+  }
+  .logro-card {
+    padding: 16px;
+  }
+  .logro-card img {
+    width: 60px;
+    height: 60px;
+  }
+}
+/* Hobbies */
+/* Estilos para la sección "Mis hobbies" */
+.hobbies-grid {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hobby-card {
+  width: 220px;
+  height: 220px;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: zoomEffect 3s infinite alternate;
+}
+
+.hobby-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.hobby-card h3 {
+  font-size: 1.5rem;
+  color: var(--brand-dark);
+  margin-bottom: 8px;
+}
+
+.hobby-card p {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+/* Efectos de iluminación para las secciones */
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  z-index: -1;
+}
+
+.hobby-item {
+  width: 200px;
+  height: 200px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.hobby-item h3 {
+  font-size: 1.5rem;
+  color: var(--brand-dark);
+  margin-bottom: 8px;
+}
+
+.hobby-item p {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.hobby-item:hover {
+  transform: scale(1.1);
+}
+
+/* Fondo dinámico */
+body {
+  background: linear-gradient(120deg, #e0f7fa, #fce4ec);
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Colores para las secciones */
+.section {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.section.alt {
+  background: linear-gradient(135deg, #ffccbc, #ffe0b2);
+}
+
+/* Animaciones de entrada y salida */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Personalización del puntero como estrella */
+body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="10" fill="black"/><path d="M24 0 L28 16 L48 24 L28 32 L24 48 L20 32 L0 24 L20 16 Z" fill="white"/></svg>'), auto;
+}
+
+/* Efecto de destello al mover el puntero */
+body:hover::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, white 0%, transparent 70%);
+  border-radius: 50%;
+  animation: sparkle 0.5s ease-out;
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+/* Ajustes para desestructurar las secciones */
+.section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+.section.alt {
+  flex-direction: row-reverse;
+}
+
+/* Tipografía aumentada */
+h2 {
+  font-size: 2.5rem;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+/* Estilos para fotos en las secciones */
+.section img {
+  width: 200px;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+/* Remove custom cursor */
+body {
+  cursor: auto;
+}
+
+/* Add styles for hero section content */
+.hero-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.hero-main h1 {
+  font-size: 2.8rem;
+  color: var(--brand-dark);
+  margin-bottom: 16px;
+}
+.hero-main p {
+  font-size: 1.2rem;
+  color: var(--muted);
+  max-width: 600px;
+}

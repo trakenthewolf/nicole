@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nicole Moran — Sobre mí</title>
+  <meta name="description" content="Página personal de Nicole Moran: quién soy, hobbies, sueños y aspiraciones.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Pantalla de bienvenida -->
+  <div id="welcome-screen" class="welcome-screen">
+    <div class="welcome-bg"></div>
+    <button id="btn-who" class="btn-heart">
+      <span class="heart">❤️</span> ¿Quién soy?
+    </button>
+  </div>
+
+  <!-- Página principal (oculta al inicio) -->
+  <div id="main-page" class="main-page" style="display:none">
+    
+    <header class="site-header">
+      <div class="container nav-bar">
+        <span class="brand"></span>
+      </div>
+    </header>
+
+    <main>
+      <!-- Foto principal -->
+      <section class="section hero reveal-section">
+        <div class="container hero-main">
+          <img src="yo.jpg" alt="Foto de Nicole Moran" class="main-photo reveal-item visible">
+          <h1 class="reveal-item">Bienvenidos a mi página</h1>
+          <p class="reveal-item">Soy Nicole Moran, una joven apasionada por aprender y explorar nuevas experiencias. Aquí comparto mis hobbies, logros y sueños.</p>
+        </div>
+      </section>
+
+      <!-- ¿Quién soy? -->
+      <section class="section reveal-section" id="quien-soy">
+        <div class="container">
+          <h2 class="reveal-item">¿Quién soy?</h2>
+          <div class="section-bg"></div>
+          <p id="quien-soy-text" class="lead reveal-item">
+            ¡Hola! Soy Nicole, tengo  27 años. Me caracterizo por mi energía positiva y mi pasión por aprender cosas nuevas cada día. Me encanta explorar diferentes actividades y descubrir en qué soy buena. Creo firmemente que cada experiencia nos ayuda a crecer y nos acerca más a nuestros sueños.
+          </p>
+          <p class="reveal-item">
+            Mi familia y amigos son mi mayor apoyo, y junto a ellos, estoy construyendo mi camino hacia el futuro que quiero. 
+          </p>
+        </div>
+      </section>
+
+      <!-- Mis hobbies -->
+      <section class="section alt reveal-section" id="hobbies">
+        <div class="container">
+          <h2 class="reveal-item">Mis hobbies</h2>
+          <div class="hobbies-content reveal-item">
+            <p>Exploro diferentes actividades que me apasionan y me ayudan a crecer como persona. Aquí están algunos de mis hobbies favoritos:</p>
+            <div class="hobbies-grid">
+              <div class="hobby-card" style="background: linear-gradient(135deg, #ff9a9e, #fad0c4);">
+                <h3>Emprender</h3>
+                <p>Transformar una idea en realidad con creatividad, pasión y dedicación.</p>
+                
+              </div>
+              <div class="hobby-card" style="background: linear-gradient(135deg, #a1c4fd, #c2e9fb);">
+                <h3>Estudiar</h3>
+                <p>Me apasiona la medicina y mi sueño es convertirme en doctora para ayudar a los demás y marcar la diferencia.</p>
+                
+              </div>
+              <div class="hobby-card" style="background: linear-gradient(135deg, #fbc2eb, #a6c1ee);">
+                <h3>Entrenar</h3>
+                <p>Superarme cada día con disciplina, esfuerzo y constancia.</p>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mis logros -->
+      <section class="section reveal-section" id="logros">
+        <div class="container">
+          <h2 class="reveal-item">Mis logros</h2>
+          <div class="section-bg floating-shapes"></div>
+          <div class="logros-grid">
+            <div class="logro-card reveal-item" data-logro="1">
+              <img src="Fotos/logocadademico.png" alt="Logro académico">
+              <h3 class="logro-title">Excelencia Académica</h3>
+              <p class="logro-summary">Recibirme del secundario con honores fue el inicio de mi camino por aprender y superarme cada día más.</p>
+              <div class="logro-description" style="display:none;">
+                <p>Este logro fue todo un desafío para mí. Me obligó a organizarme, investigar y aprender a trabajar en equipo bajo presión. Nuestro proyecto sobre energías renovables no solo fue bien recibido, sino que también me enseñó a confiar en mis ideas, superar obstáculos y valorar la perseverancia en cada paso del camino.</p>
+              </div>
+            </div>
+            <div class="logro-card reveal-item" data-logro="2">
+              <img src="Fotos/danza.jpg" alt="Logro deportivo">
+              <h3 class="logro-title">Medalla en Danza </h3>
+              <p class="logro-summary">Obtuve la medalla en competencia en danza, superando mis propios límites.</p>
+              <div class="logro-description" style="display:none;">
+                <p>La danza me ha enseñado disciplina y a nunca rendirme. Entrené duro durante todo el año para esta competencia y, aunque no fue oro, la medalla  representó un gran logro personal y una motivación para seguir mejorando.</p>
+              </div>
+            </div>
+            <div class="logro-card reveal-item" data-logro="3">
+              <img src="Fotos/ser mama.png" alt="Logro artístico">
+              <h3 class="logro-title">Ser Mama</h3>
+              <p class="logro-summary">Ser madre me enseñó amor incondicional, paciencia y la fuerza para seguir adelante cada día.</p>
+              <div class="logro-description" style="display:none;">
+                <p>Ser mamá ha sido uno de los mayores retos y alegrías de mi vida. Cada día aprendo a cuidar, guiar y apoyar a mi hija, mientras descubro la fuerza y la dedicación que no sabía que tenía. Esta experiencia me inspira a crecer y a ser mejor persona constantemente.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modal para detalles de logros -->
+      <div id="logro-detail" class="logro-detail">
+        <div id="logro-detail-content" class="logro-detail-content">
+          <h3 class="logro-detail-title"></h3>
+          <div class="logro-detail-text"></div>
+        </div>
+        <button id="close-logro" class="btn">Cerrar</button>
+      </div>
+
+      <!-- Mi inspiración -->
+      <section class="section alt reveal-section" id="inspiracion">
+        <div class="container">
+          <h2 class="reveal-item">Mi inspiración</h2>
+          <div class="section-bg stars"></div>
+          <div class="inspiracion-content">
+            <div class="inspiracion-img reveal-item">
+              <img src="Fotos/jaz.jpg" alt="Imagen inspiradora">
+            </div>
+            <div class="inspiracion-text reveal-item">
+              <p class="quote">"Los sueños son el primer paso hacia los logros. Cada día es una nueva oportunidad para acercarnos a ellos."</p>
+              <p>Mi hija es la mayor inspiración de mi vida, su sonrisa me motiva a seguir adelante y a dar siempre lo mejor de mí. 
+Junto a ella y el amor por los animales, encuentro la fuerza y la ternura que me impulsan a crecer, soñar y nunca rendirme.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ¿Quién quiero ser? -->
+      <section class="section reveal-section" id="quien-quiero-ser">
+        <div class="container">
+          <h2 class="reveal-item">¿Quién quiero ser?</h2>
+          <div class="section-bg floating-shapes"></div>
+          <p id="quien-quiero-ser-text" class="lead reveal-item">
+            Mi gran sueño es convertirme en doctora y trabajar de lo que me apaciona 
+          </p>
+          <p class="reveal-item">
+            Además de mi vocación médica,Una buena madre y el mejor ejemplo para mi hija.
+          <p class="reveal-item">
+            Deseo seguir creciendo, rodeada de mis animales, y dejar una huella positiva para mi pequeña.
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© <span id="year"></span> Nicole Moran. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
