@@ -373,3 +373,33 @@ const hobbiesSection = document.getElementById('hobbies');
 if (hobbiesSection) {
   hobbiesSection.addEventListener('click', rotateHobbies);
 }
+
+// Mostrar/ocultar botón de WhatsApp mientras se hace scroll (eliminado porque ahora está en la nav-bar)
+(function manageWhatsAppVisibility(){
+  const waBtn = document.querySelector('.whatsapp-float');
+  if (!waBtn) return; // nada que hacer si no existe
+  // Si existiera, lo forzamos a oculto para evitar parpadeos
+  waBtn.classList.add('is-hidden');
+})();
+let lastY = window.pageYOffset;
+let ticking = false;
+
+function onScroll(){
+  const currentY = window.pageYOffset;
+  // Oculta cuando el usuario baja, muestra cuando sube o está cerca del fondo
+  const nearBottom = (window.innerHeight + currentY) >= (document.body.offsetHeight - 80);
+  if (currentY > lastY && !nearBottom) {
+    waBtn.classList.add('is-hidden');
+  } else {
+    waBtn.classList.remove('is-hidden');
+  }
+  lastY = currentY;
+  ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (!ticking){
+    window.requestAnimationFrame(onScroll);
+    ticking = true;
+  }
+}, { passive: true });
